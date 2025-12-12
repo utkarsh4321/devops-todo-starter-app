@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "node --inspect --env-file .env --watch index",
+    "build": "rm -rf dist && node esbuild.config.js",
+    "generate": "drizzle-kit generate",
+    "migrate": "node migrate.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "drizzle-orm": "^0.44.4",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.3",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.4",
+    "esbuild": "^0.25.9",
+    "esbuild-plugin-copy": "^2.1.1"
+  }
+}

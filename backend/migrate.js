@@ -4,13 +4,6 @@ const { migrate } = require("drizzle-orm/mysql2/migrator");
 const { todos } = require("./schema");
 require("dotenv").config();
 
-console.log(
-  "dotenv",
-  process.env.DB_HOST,
-  process.env.DB_USERNAME,
-  process.env.DB_PASSWORD,
-  process.env.DB_DATABASE
-);
 async function main() {
   try {
     // Initialize MySQL connection

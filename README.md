@@ -28,14 +28,6 @@ Install all the dependencies
 ```bash
 npm i
 ```
-
-
-
-Then run cd..
-
-and run cd frontend
-
-Run npm i
-
-
+Follow the blog post for rest of the steps
+[Blog](https://dev.to/utkarsh4321/part1-how-to-containerize-a-full-stack-app-react-express-and-mysql-4coi-temp-slug-660007/)
 

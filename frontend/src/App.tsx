@@ -114,9 +114,7 @@ function App() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value.trim()) {
-      setTodoTitle(value.trim());
-    }
+    setTodoTitle(value);
   };
 
   const startEdit = (todo: Todo) => {

@@ -1,0 +1,36 @@
+services:
+  # Your Database Service
+  my-todo-database:
+    image: mysql:8.0.44 # or mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - mysql_db_data:/var/lib/mysql
+
+  # Your App Service
+  todo-backend:
+    build: .
+    restart: on-failure
+    ports:
+      - "5500:5500"
+    env_file:
+      - .env
+    depends_on:
+      my-todo-database:
+        condition: service_healthy
+  todo-frontend:
+    build: ../frontend
+    ports:
+      - "8080:80"
+    env_file:
+      - ../frontend/.env
+
+volumes:
+  mysql_db_data:
+    external: true

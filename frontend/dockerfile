@@ -52,6 +52,7 @@ FROM nginx:stable-alpine-slim AS final
 
 
 COPY nginx-entrypoint.sh /nginx-entrypoint.sh
+RUN sed -i 's/\r$//' /nginx-entrypoint.sh
 RUN chmod +x /nginx-entrypoint.sh
 
 # Copy the production dependencies from the build stage
@@ -62,4 +63,5 @@ COPY --from=build /usr/src/app/dist /mywebsite
 # Expose the port that the application listens on.
 EXPOSE 80
 ENTRYPOINT ["/nginx-entrypoint.sh"]
+# CMD ["nginx", "-g", "daemon off;"]
 

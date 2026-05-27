@@ -21,20 +21,22 @@ RUN npm run build
 
 # 4. Final Stage: The Production Runner
 FROM base AS runner
+WORKDIR /backend-app
 ENV NODE_ENV=production
 
 # Copy the entrypoint script
-COPY docker-entrypoint.sh ./docker-entrypoint.sh
-RUN sed -i 's/\r$//' ./docker-entrypoint.sh
-RUN chmod +x ./docker-entrypoint.sh
+COPY docker-entrypoint.sh /backend-app/docker-entrypoint.sh
+RUN sed -i 's/\r$//' /backend-app/docker-entrypoint.sh && \ 
+chmod +x /backend-app/docker-entrypoint.sh
 
 # Run as non-root user for security
-USER node
+RUN addgroup -S backend_group && adduser -S backend_user -G backend_group
+USER backend_user
 
 # Copy necessary files from previous stages
-COPY --from=deps --chown=node:node /app/node_modules ./node_modules
-COPY --from=builder --chown=node:node /app/dist ./
+COPY --from=deps --chown=backend_user:backend_group /app/node_modules /backend-app/node_modules
+COPY --from=builder --chown=backend_user:backend_group /app/dist /backend-app
 
 RUN ls -la
 EXPOSE 5500
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["/backend-app/docker-entrypoint.sh"]

@@ -34,9 +34,8 @@ RUN addgroup -S backend_group && adduser -S backend_user -G backend_group
 USER backend_user
 
 # Copy necessary files from previous stages
-COPY --from=deps --chown=backend_user:backend_group /app/node_modules /backend-app/node_modules
-COPY --from=builder --chown=backend_user:backend_group /app/dist /backend-app
+COPY --from=deps /app/node_modules /backend-app/node_modules
+COPY --from=builder /app/dist /backend-app
 
-RUN ls -la
 EXPOSE 5500
 ENTRYPOINT ["/backend-app/docker-entrypoint.sh"]

@@ -24,18 +24,21 @@ FROM base AS runner
 WORKDIR /backend-app
 ENV NODE_ENV=production
 
+RUN addgroup -S backend_group && adduser -S backend_user -G backend_group
+
 # Copy the entrypoint script
 COPY docker-entrypoint.sh /backend-app/docker-entrypoint.sh
-RUN sed -i 's/\r$//' /backend-app/docker-entrypoint.sh && \ 
-chmod +x /backend-app/docker-entrypoint.sh
-
-# Run as non-root user for security
-RUN addgroup -S backend_group && adduser -S backend_user -G backend_group
-USER backend_user
-
+RUN sed -i 's/\r$//' /backend-app/docker-entrypoint.sh
 # Copy necessary files from previous stages
 COPY --from=deps /app/node_modules /backend-app/node_modules
 COPY --from=builder /app/dist /backend-app
+
+RUN chown -R root:backend_group /backend-app
+RUN chmod -R 750 /backend-app
+
+# Run as non-root user for security
+USER backend_user
+
 
 EXPOSE 5500
 ENTRYPOINT ["/backend-app/docker-entrypoint.sh"]

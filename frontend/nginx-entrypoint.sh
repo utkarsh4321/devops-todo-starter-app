@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Start the generated config file
-CONFIG_PATH="/frontend-app/mywebsite/env-config.js"
+CONFIG_PATH="/frontend-app/mywebsite/env/env-config.js"
 echo "window.env = {" > $CONFIG_PATH
 
 # Find all environment variables starting with "VITE_" and add them to the file

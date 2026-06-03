@@ -72,13 +72,12 @@ RUN sed -i 's|.*nginx.pid;|pid /run/nginx/nginx.pid;|g' /etc/nginx/nginx.conf
 # Owner (root): Read/Execute (5)
 # Group (frontend_group): Read/Execute (5)
 # Others: No Access (0)
-RUN chmod -R 550 /frontend-app /etc/nginx
+RUN chmod -R 750 /frontend-app /etc/nginx
 # 4. Grant Write access to the specific runtime folders Nginx needs to function (770).
 # Owner (root): Read/Write/Execute (7)
 # Group (frontend_group): Read/Write/Execute (7)
 # Others: No Access (0)
-RUN chmod -R 770 /run/nginx /var/cache/nginx /var/log/nginx && \ 
-chmod 770 /frontend-app/mywebsite/env
+RUN chmod -R 770 /run/nginx /var/cache/nginx /var/log/nginx /frontend-app/mywebsite/env
 USER frontend_user
 
 # Expose the port that the application listens on.

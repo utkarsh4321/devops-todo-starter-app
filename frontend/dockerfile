@@ -68,12 +68,12 @@ RUN mkdir -p /run/nginx
 RUN chown -R root:frontend_group /frontend-app /etc/nginx /run/nginx /var/cache/nginx /var/log/nginx
 # 2. Update the PID path in the nginx config
 RUN sed -i 's|.*nginx.pid;|pid /run/nginx/nginx.pid;|g' /etc/nginx/nginx.conf
-# 3. Lock down the app and config folders to Read/Execute (550).
-# Owner (root): Read/Execute (5)
+# 3. Lock down the app and config folders to Read/Execute (750).
+# Owner (root): Read/write/Execute (7)
 # Group (frontend_group): Read/Execute (5)
 # Others: No Access (0)
 RUN chmod -R 750 /frontend-app /etc/nginx
-# 4. Grant Write access to the specific runtime folders Nginx needs to function (770).
+# 4. Grant Write access to the specific runtime folders Nginx needs to function and env creation folder (770).
 # Owner (root): Read/Write/Execute (7)
 # Group (frontend_group): Read/Write/Execute (7)
 # Others: No Access (0)

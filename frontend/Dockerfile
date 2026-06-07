@@ -80,6 +80,6 @@ RUN chmod -R 750 /frontend-app /etc/nginx
 RUN chmod -R 770 /run/nginx /var/cache/nginx /var/log/nginx /frontend-app/mywebsite/env
 USER frontend_user
 
-# Expose the port that the application listens on.the
+# Expose the port that the application listens on.
 EXPOSE 8080
 ENTRYPOINT ["/frontend-app/nginx-entrypoint.sh"]

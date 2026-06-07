@@ -61,8 +61,8 @@ chmod +x /frontend-app/nginx-entrypoint.sh
 COPY --from=build /frontend-app/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /frontend-app/dist /frontend-app/mywebsite
 RUN addgroup -S frontend_group && adduser -S frontend_user -G frontend_group
-RUN mkdir -p /frontend-app/mywebsite/env
 RUN mkdir -p /run/nginx
+RUN mkdir -p /frontend-app/mywebsite/env
 # 1. Set root as the owner and frontend_group as the group for ALL folders.
 # Because root owns them, frontend_user is permanently blocked from using chmod.
 RUN chown -R root:frontend_group /frontend-app /etc/nginx /run/nginx /var/cache/nginx /var/log/nginx
